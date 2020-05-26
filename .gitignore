@@ -2,3 +2,6 @@
 /dist/
 /data/
 npm-debug.log
+
+/server/util/
+server/util/
