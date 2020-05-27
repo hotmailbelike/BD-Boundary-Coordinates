@@ -57,8 +57,41 @@ const filterLocation = async (req, res) => {
 	}
 };
 
+const getSimilarLocationNames = async (req, res) => {
+	let locationType = req.body.locationType;
+	let areaName = req.body.areaName;
+	try {
+		let bound = await Bound.find({
+			locationType,
+			areaName: {
+				$regex: areaName,
+				$options: 'i',
+			},
+		}).select('areaName');
+		res.json(bound);
+	} catch (err) {
+		return res.status(400).json({
+			error: errorHandler.getErrorMessage(error),
+		});
+	}
+};
+
+const getLocationBound = async (req, res) => {
+	let id = req.body.id;
+	try {
+		let bound = await Bound.findById(id).select('coordinates');
+		res.json(bound);
+	} catch (err) {
+		return res.status(400).json({
+			error: errorHandler.getErrorMessage(error),
+		});
+	}
+};
+
 export default {
 	/*  
   writeAll,*/
 	filterLocation,
+	getSimilarLocationNames,
+	getLocationBound,
 };
