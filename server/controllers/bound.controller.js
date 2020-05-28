@@ -77,12 +77,14 @@ const getSimilarLocationNames = async (req, res) => {
 };
 
 const getLocationBound = async (req, res) => {
-	let locationType = req.body.locationType;
-	let areaName = req.body.areaName;
+	let id = req.body.id;
+	// let locationType = req.body.locationType;
+	// let areaName = req.body.areaName;
 
 	try {
-		// let bound = await Bound.findById(id).select('coordinates');
-		let bound = await Bound.find({ locationType, areaName }).select('coordinates');
+		let bound = await Bound.findById(id).select('coordinates');
+		// let bound = await Bound.find({ locationType, areaName }).select('coordinates');
+
 		res.json(bound);
 	} catch (err) {
 		console.log('getLocationBound -> err', err);
